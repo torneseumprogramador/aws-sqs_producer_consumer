@@ -14,11 +14,13 @@ namespace SQS.Consumidor // Consumer
         {
             var awsCredentials = new BasicAWSCredentials(Environment.GetEnvironmentVariable("AWS_KEY"), Environment.GetEnvironmentVariable("AWS_SECRET")); 
 
-            var client = new AmazonSQSClient(awsCredentials, RegionEndpoint.SAEast1);
+            var client = new AmazonSQSClient(awsCredentials, RegionEndpoint.USEast1);
             var request = new ReceiveMessageRequest
             {
                 QueueUrl = Environment.GetEnvironmentVariable("SQS_URL")
             };
+
+            request.WaitTimeSeconds = 20; // long polling
 
             while (true)
             {
